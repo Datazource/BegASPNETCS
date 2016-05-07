@@ -6,14 +6,26 @@
 <head runat="server">
     <title></title>
     <asp:ContentPlaceHolder id="head" runat="server">
-    </asp:ContentPlaceHolder>
+    </asp:ContentPlaceHolder> 
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
+    <div id="PageWrapper"> 
+        <header> <a href="/"></a></header>
+        <nav> <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" CssClass="MainMenu" Orientation="Horizontal" StaticEnableDefaultPopOutImage="False"></asp:Menu>
+            <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" ShowStartingNode="False" />
+        </nav>
+        <section id="MainContent">
+            <asp:ContentPlaceHolder ID="cpMainContent" runat="server"></asp:ContentPlaceHolder>
+        </section>
+        <aside id="Sidebar">Select a Theme
+            <br />
+            <asp:DropDownList ID="ThemeList" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ThemeList_SelectedIndexChanged">
+                <asp:ListItem>Monochrome</asp:ListItem>
+                <asp:ListItem>DarkGrey</asp:ListItem>
+            </asp:DropDownList>
+        </aside>
+        <footer id="Footer">Footer Goes Here</footer>
     </div>
     </form>
 </body>
