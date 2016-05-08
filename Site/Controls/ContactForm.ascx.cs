@@ -50,8 +50,9 @@ public partial class Controls_ContactForm : System.Web.UI.UserControl
             mySmtpClient.Send(myMessage);
 
             Message.Visible = true;
+            MessageSentPara.Visible = true;
             FormTable.Visible = false;
-            System.Threading.Thread.Sleep(5000);
+            System.Threading.Thread.Sleep(2000);
         }
     }
 }
