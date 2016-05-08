@@ -5,13 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class About_AboutUs : BasePage
+public partial class Demos_Target : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
-        {
-            Banner2.NavigateUrl = "http://imar.spaanjars.com";
-        }
+        Label1.Text = Request.QueryString.ToString();
     }
 }

@@ -200,3 +200,17 @@ ul.level1 .selected {  /* Defines the appearance of active menu items */  backgr
 a.level1 {  /* Adds some white space to the left of the main menu item text */  margin-left: 5px; }
 a.level2 {  /* Defines the appearance of the sub menu items */  background-color: #cccccc;  padding-left: 8px; }
 a.level1:hover, a.level2:hover {  /* Defines the hover style for the main and sub items */  background-color: #BCD1FE; }
+
+img{ border:0; }
+
+.ErrorMessage {  color: red; }
+
+
+.PleaseWait{
+    height : 32px;
+    width : 500px;
+    background-image : url(Images/PleaseWait.gif);
+    background-repeat : no-repeat;
+    padding-left : 40px;
+    line-height : 32px;
+}
