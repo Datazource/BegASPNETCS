@@ -160,3 +160,4 @@ img{ border:0; }
 .Watermark {  position: relative;  width: 0;  height: 1.25em;  vertical-align: top; }
 .Watermark label {  position: absolute;  left: 0;  top: 2px;  white-space: nowrap;  color: #999;  padding-left: 4px;  height: 1.25em;  vertical-align: middle; }
 .InputBox {  width: 300px; }
+.ItemContainer{ width:400px; }
