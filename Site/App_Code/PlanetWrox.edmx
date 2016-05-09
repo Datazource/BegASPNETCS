@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PlanetWroxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PlanetWroxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Genre">
           <Key>
             <PropertyRef Name="Id" />
@@ -81,7 +81,8 @@
             <End Role="Review" EntitySet="Review" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PlanetWroxModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -93,6 +94,25 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Review_Genre" FromRole="Genre" ToRole="Review" />
+        </EntityType>
+        <EntityType Name="PhotoAlbum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Pictures" Relationship="Self.FK_Picture_PhotoAlbum" FromRole="PhotoAlbum" ToRole="Picture" />
+        </EntityType>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ToolTip" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhotoAlbumId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PhotoAlbum" Relationship="Self.FK_Picture_PhotoAlbum" FromRole="Picture" ToRole="PhotoAlbum" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -120,42 +140,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PlanetWroxEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Genres" EntityType="Self.Genre" />
-          <EntitySet Name="Reviews" EntityType="Self.Review" />
-          <AssociationSet Name="FK_Review_Genre" Association="Self.FK_Review_Genre">
-            <End Role="Genre" EntitySet="Genres" />
-            <End Role="Review" EntitySet="Reviews" />
-          </AssociationSet>
-          <EntitySet Name="PhotoAlbums" EntityType="PlanetWroxModel.PhotoAlbum" />
-          <EntitySet Name="Pictures" EntityType="PlanetWroxModel.Picture" />
-          <AssociationSet Name="FK_Picture_PhotoAlbum" Association="PlanetWroxModel.FK_Picture_PhotoAlbum">
-            <End Role="PhotoAlbum" EntitySet="PhotoAlbums" />
-            <End Role="Picture" EntitySet="Pictures" />
-          </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="PhotoAlbum">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Pictures" Relationship="PlanetWroxModel.FK_Picture_PhotoAlbum" FromRole="PhotoAlbum" ToRole="Picture" />
-        </EntityType>
-        <EntityType Name="Picture">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ToolTip" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PhotoAlbumId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PhotoAlbum" Relationship="PlanetWroxModel.FK_Picture_PhotoAlbum" FromRole="Picture" ToRole="PhotoAlbum" />
-        </EntityType>
         <Association Name="FK_Picture_PhotoAlbum">
-          <End Type="PlanetWroxModel.PhotoAlbum" Role="PhotoAlbum" Multiplicity="1" />
-          <End Type="PlanetWroxModel.Picture" Role="Picture" Multiplicity="*" />
+          <End Role="PhotoAlbum" Type="Self.PhotoAlbum" Multiplicity="1" />
+          <End Role="Picture" Type="Self.Picture" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PhotoAlbum">
               <PropertyRef Name="Id" />
@@ -165,7 +152,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="PlanetWroxEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="PhotoAlbums" EntityType="Self.PhotoAlbum" />
+          <EntitySet Name="Pictures" EntityType="Self.Picture" />
+          <EntitySet Name="Reviews" EntityType="Self.Review" />
+          <AssociationSet Name="FK_Review_Genre" Association="Self.FK_Review_Genre">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Picture_PhotoAlbum" Association="Self.FK_Picture_PhotoAlbum">
+            <End Role="PhotoAlbum" EntitySet="PhotoAlbums" />
+            <End Role="Picture" EntitySet="Pictures" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -177,6 +178,25 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhotoAlbums">
+            <EntityTypeMapping TypeName="PlanetWroxModel.PhotoAlbum">
+              <MappingFragment StoreEntitySet="PhotoAlbum">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pictures">
+            <EntityTypeMapping TypeName="PlanetWroxModel.Picture">
+              <MappingFragment StoreEntitySet="Picture">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ToolTip" ColumnName="ToolTip" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="PhotoAlbumId" ColumnName="PhotoAlbumId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -194,26 +214,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PhotoAlbums">
-            <EntityTypeMapping TypeName="PlanetWroxModel.PhotoAlbum">
-              <MappingFragment StoreEntitySet="PhotoAlbum">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Pictures">
-            <EntityTypeMapping TypeName="PlanetWroxModel.Picture">
-              <MappingFragment StoreEntitySet="Picture">
-                <ScalarProperty Name="PhotoAlbumId" ColumnName="PhotoAlbumId" />
-                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
-                <ScalarProperty Name="ToolTip" ColumnName="ToolTip" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -229,7 +230,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
