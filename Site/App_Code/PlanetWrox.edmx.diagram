@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e02c3b86e443472bb3e9043c1357fbfc" Name="Diagram1">
+        <EntityTypeShape EntityType="PlanetWroxModel.Genre" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PlanetWroxModel.Review" Width="1.5" PointX="5.375" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="PlanetWroxModel.FK_Review_Genre" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PlanetWroxModel.PhotoAlbum" Width="1.5" PointX="1.125" PointY="4.25" />
+        <EntityTypeShape EntityType="PlanetWroxModel.Picture" Width="1.5" PointX="3.375" PointY="3.875" />
+        <AssociationConnector Association="PlanetWroxModel.FK_Picture_PhotoAlbum" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
